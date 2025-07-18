@@ -39,7 +39,8 @@ H           Show help message
 L           Toggle track looping (infinite playback)
 -/=         Adjust tempo
 1-9         Toggle channel on/off
-0           Reset tempo and turn channels back on */
+0           Reset tempo and turn channels back on
+Q/Esc       Quit
 )";
 
 static void handle_error( const char* );
