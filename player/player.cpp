@@ -106,6 +106,7 @@ static void start_track( int track, const char* path )
 int main( int argc, char** argv )
 {
 	init();
+  printf( "%s\n", usage );
 
 	bool by_mem = false;
 	const char* path = "test.nsf";
