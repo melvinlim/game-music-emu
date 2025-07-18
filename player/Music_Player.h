@@ -69,6 +69,8 @@ public:
 	typedef short sample_t;
 	void set_scope_buffer( sample_t* buf, int size ) { scope_buf = buf; scope_buf_size = size; }
 
+	int get_time();
+
 public:
 	Music_Player();
 	~Music_Player();

@@ -340,6 +340,12 @@ void Music_Player::fill_buffer( void* data, sample_t* out, int count )
 	}
 }
 
+int Music_Player::get_time( )
+{
+	int pos = gme_tell( emu_ );
+	return pos;
+}
+
 // Sound output driver using SDL
 
 #include "SDL.h"

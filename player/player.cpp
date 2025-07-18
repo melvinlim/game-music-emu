@@ -137,6 +137,8 @@ int main( int argc, char** argv )
 	bool looping = false;
 	while ( running )
 	{
+		//printf("%d\n", player->get_time());
+		//fflush(0);
 		// Update scope
 		scope->draw( scope_buf, scope_width, 2 );
 
