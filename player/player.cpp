@@ -77,6 +77,7 @@ static void init( void )
 static void start_track( int track, const char* path )
 {
 	paused = false;
+  printf("Playing track %d.\n", track);
 	handle_error( player->start_track( track - 1 ) );
 
 	// update window title with track info
@@ -133,6 +134,7 @@ int main( int argc, char** argv )
 	bool echo_disabled = false;
 	bool fading_out = true;
 	int muting_mask = 0;
+  bool looping = false;
 	while ( running )
 	{
 		// Update scope
@@ -141,10 +143,22 @@ int main( int argc, char** argv )
 		// Automatically go to next track when current one ends
 		if ( player->track_ended() )
 		{
-			if ( track < player->track_count() )
+      if(looping)
+      {
+        printf("Track %d ended.\n", track);
+        printf("Looping.\n");
+				start_track( track, path );
+      }
+      else if ( track < player->track_count() )
+      {
+        printf("Track %d ended.\n", track);
 				start_track( ++track, path );
+      }
 			else
-				player->pause( paused = true );
+      {
+        if(!paused)
+          player->pause( paused = true );
+      }
 		}
 
 		// Handle keyboard input
@@ -217,7 +231,8 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_L: // toggle loop
 					player->set_fadeout( fading_out = !fading_out );
-					printf( "%s\n", fading_out ? "Will stop at track end" : "Playing forever" );
+          looping = !fading_out;
+					printf( "%s\n", fading_out ? "Will play next track or stop at track end" : "Playing current track forever" );
 					fflush( stdout );
 					break;
 
