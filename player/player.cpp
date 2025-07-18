@@ -229,10 +229,14 @@ int main( int argc, char** argv )
 					fflush( stdout );
 					break;
 
-				case SDL_SCANCODE_L: // toggle loop
+				case SDL_SCANCODE_F: // toggle fadeout
 					player->set_fadeout( fading_out = !fading_out );
-					looping = !fading_out;
-					printf( "%s\n", fading_out ? "Will play next track or stop at track end" : "Playing current track forever" );
+					printf( "%s\n", fading_out ? "8 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
+					break;
+
+				case SDL_SCANCODE_L: // toggle loop
+					looping = !looping;
+					printf( "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
 					fflush( stdout );
 					break;
 
