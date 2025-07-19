@@ -15,6 +15,8 @@ void ClearScreen()
 
 namespace fs = std::filesystem;
 
+std::vector<std::string> supportedExt = {".nsf", ".vgm", ".spc"};
+
 std::list<std::string> getFileList()
 {
 	std::list<std::string> result;
@@ -35,8 +37,8 @@ std::list<std::string> getFileList()
 			//std::cout << "File: " << filename;
 			if (!extension.empty()) {
 				//std::cout << " (Extension: " << extension << ")";
-				if(extension == ".nsf")
-				{
+				auto finder = std::find(supportedExt.begin(), supportedExt.end(), extension);
+				if(finder != supportedExt.end()){
 					//result.push_back(filename);
 					result.push_back(entry.path().string());
 				}

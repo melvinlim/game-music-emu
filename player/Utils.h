@@ -8,6 +8,8 @@
 #include <filesystem>
 #include <string>
 #include <list>
+#include <vector>
+#include <algorithm>
 
 //	https://stackoverflow.com/questions/2347770/how-do-you-clear-the-console-screen-in-c
 void ClearScreen();
