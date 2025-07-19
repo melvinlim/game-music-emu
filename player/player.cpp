@@ -52,7 +52,8 @@ static Audio_Scope* scope;
 static Music_Player* player;
 static short scope_buf [scope_width * 2];
 
-static char textBuffer[2048] = {0};
+#define TBSZ 2048
+static char textBuffer[TBSZ] = {0};
 
 static void printInfo()
 {
@@ -96,7 +97,7 @@ static void init( void )
 static void start_track( int track, const char* path )
 {
 	paused = false;
-	printf("Playing track %d.\n", track);
+	snprintf(textBuffer, TBSZ, "Playing track %d.\n", track);
 	handle_error( player->start_track( track - 1 ) );
 
 	// update window title with track info
@@ -121,6 +122,7 @@ static void start_track( int track, const char* path )
 			seconds / 60, seconds % 60 ) )
 	{
 		scope->set_caption( title );
+		snprintf(textBuffer, TBSZ, title);
 	}
 }
 
@@ -164,13 +166,13 @@ int main( int argc, char** argv )
 		{
 			if(looping)
 			{
-				printf("Track %d ended.\n", track);
-				printf("Looping.\n");
+				snprintf(textBuffer, TBSZ, "Track %d ended.\n", track);
+				snprintf(textBuffer, TBSZ, "Looping.\n");
 				start_track( track, path );
 			}
 			else if ( track < player->track_count() )
 			{
-				printf("Track %d ended.\n", track);
+				snprintf(textBuffer, TBSZ, "Track %d ended.\n", track);
 				start_track( ++track, path );
 			}
 			else
@@ -244,18 +246,18 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_D: // toggle echo on/off
 					echo_disabled = !echo_disabled;
 					player->set_echo_disable(echo_disabled);
-					printf( "%s\n", echo_disabled ? "SPC echo is disabled" : "SPC echo is enabled" );
+					snprintf(textBuffer, TBSZ,  "%s\n", echo_disabled ? "SPC echo is disabled" : "SPC echo is enabled" );
 					fflush( stdout );
 					break;
 
 				case SDL_SCANCODE_F: // toggle fadeout
 					player->set_fadeout( fading_out = !fading_out );
-					printf( "%s\n", fading_out ? "8 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
+					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "8 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
 					break;
 
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
-					printf( "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
+					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
 					fflush( stdout );
 					break;
 
@@ -275,7 +277,7 @@ int main( int argc, char** argv )
 					break;
 
 				case SDL_SCANCODE_H: // help
-					printf( "%s\n", usage );
+					snprintf(textBuffer, TBSZ,  "%s\n", usage );
 					fflush( stdout );
 					break;
 
