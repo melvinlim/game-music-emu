@@ -27,6 +27,7 @@ static int const scope_height = 512;
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ncurses.h>
 #include "SDL.h"
 
 static const char *usage = R"(
@@ -55,15 +56,21 @@ static char textBuffer[2048] = {0};
 
 static void printInfo()
 {
-	ClearScreen();
-	printf( "%s\n", usage );
-	printf("%s\n", textBuffer);
-	printf("%d\n", player->get_time());
+	//ClearScreen();
+	move(0,0);
+	printw( "%s\n", usage );
+	printw("%s\n", textBuffer);
+	printw("%d\n", player->get_time());
 	fflush(0);
+	refresh();
 }
 
 static void init( void )
 {
+	initscr();	//initialize ncurses
+	noecho();		//turn off echo
+	nl();				//translate \n to \r\n
+
 	// Start SDL
 	if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO ) < 0 )
 		exit( EXIT_FAILURE );
@@ -288,6 +295,8 @@ int main( int argc, char** argv )
 	// Cleanup
 	delete player;
 	delete scope;
+
+	endwin();
 
 	return 0;
 }
