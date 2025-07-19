@@ -32,8 +32,9 @@ static int const scope_height = 512;
 
 static const char *usage = R"(
 Left/Right  Change track
-Up/Down     Seek to one second forward/backward (if possible)
+Up/Down     Seek one second forward/backward (if possible)
 Space       Pause/unpause
+N           Play next file
 E           Normal/slight stereo echo/more stereo echo
 D           Toggle echo processing
 A           Enable/disable accurate emulation
