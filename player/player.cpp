@@ -107,8 +107,8 @@ static void init( void )
 static void start_track( int track, const char* path )
 {
 	paused = false;
-	snprintf(textBuffer, TBSZ, "Playing track %d.\n", track);
-	handle_error( player->start_track( track - 1 ) );
+	snprintf(textBuffer, TBSZ, "Playing track %d.\n", track+1);
+	handle_error( player->start_track( track ) );
 
 	// update window title with track info
 
@@ -128,7 +128,7 @@ static void start_track( int track, const char* path )
 
 	char title [512];
 	if ( 0 < snprintf( title, sizeof title, "%s: %d/%d %s (%ld:%02ld)",
-			game, track, player->track_count(), player->track_info().song,
+			game, track+1, player->track_count(), player->track_info().song,
 			seconds / 60, seconds % 60 ) )
 	{
 		scope->set_caption( title );
@@ -161,7 +161,7 @@ int main( int argc, char** argv )
 	}
 
 	// Main loop
-	int track = 1;
+	int track = 0;
 	double tempo = 1.0;
 	bool running = true;
 	double stereo_depth = 0.0;
@@ -194,7 +194,7 @@ int main( int argc, char** argv )
 				if(looping)
 				{
 					snprintf(textBuffer, TBSZ, "Looping.\n");
-					track = 1;
+					track = 0;
 				}
 				else
 				{
@@ -223,14 +223,14 @@ int main( int argc, char** argv )
 					break;
 
 				case SDL_SCANCODE_LEFT: // prev track
-					if ( !paused && !--track )
-						track = 1;
+					if(--track < 0)
+						track = 0;
 					start_track( track, path );
 					break;
 
 				case SDL_SCANCODE_RIGHT: // next track
 					if ( track < player->track_count() )
-						start_track( ++track, path );
+						start_track( track++, path );
 					break;
 
 				case SDL_SCANCODE_MINUS: // reduce tempo
@@ -282,7 +282,7 @@ int main( int argc, char** argv )
 					break;
 
 				case SDL_SCANCODE_N: // next file
-					track=1;
+					track=0;
 					filePointer++;
 					if(filePointer != files.end())
 					{
@@ -296,7 +296,7 @@ int main( int argc, char** argv )
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
 					handle_error( player->load_file( path, by_mem ) );
-					start_track( track, path );
+					start_track( track++, path );
 					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 					break;
 
