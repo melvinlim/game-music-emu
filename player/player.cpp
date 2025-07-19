@@ -56,6 +56,7 @@ static char textBuffer[TBSZ] = {0};
 
 static std:: string nextFile;
 static char title [512];
+static char info_track_num[256] = {0};
 
 static void printTime(int seconds)
 {
@@ -73,8 +74,8 @@ static void printInfo()
 	printTime(seconds);
 	printw("\n");
 	printw("%s\n", title);
+	printw("%s\n", info_track_num);
 	printw("%s\n", textBuffer);
-	fflush(0);
 	refresh();
 }
 
@@ -109,8 +110,8 @@ static void init( void )
 static void start_track( int track, const char* path )
 {
 	paused = false;
-	snprintf(textBuffer, TBSZ, "Playing track %d.\n", track+1);
 	handle_error( player->start_track( track ) );
+	snprintf(info_track_num, sizeof info_track_num, "Playing track %d / %d.", track+1, player->track_count());
 
 	// update window title with track info
 
@@ -169,7 +170,7 @@ int main( int argc, char** argv )
 	bool echo_disabled = false;
 	bool fading_out = true;
 	int muting_mask = 0;
-	bool looping = true;
+	bool looping = false;
 
 	// Load file
 	handle_error( player->load_file( path, by_mem ) );
@@ -225,7 +226,9 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_LEFT: // prev track
 					if(--track < 0)
 						track = 0;
-					start_track( track, path );
+					if(--track < 0)
+						track = 0;
+					start_track( track++, path );
 					break;
 
 				case SDL_SCANCODE_RIGHT: // next track
