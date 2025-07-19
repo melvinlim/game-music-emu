@@ -51,8 +51,10 @@ static Audio_Scope* scope;
 static Music_Player* player;
 static short scope_buf [scope_width * 2];
 
-#define TBSZ 2048
+#define TBSZ 4096
 static char textBuffer[TBSZ] = {0};
+
+static std:: string nextFile;
 
 static void printTime(int seconds)
 {
@@ -145,7 +147,7 @@ int main( int argc, char** argv )
 	std::list<std::string>::iterator filePointer = files.begin();
 	if(files.size() > 0)
 	{
-		std:: string nextFile = *filePointer;
+		nextFile = *filePointer;
 		nextFile.copy(path, nextFile.length());
 		path[nextFile.length()]='\0';
 	}
@@ -171,6 +173,7 @@ int main( int argc, char** argv )
 
 	// Load file
 	handle_error( player->load_file( path, by_mem ) );
+	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 	start_track( track++, path );
 
 	while ( running )
@@ -276,6 +279,25 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
 					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
+					break;
+
+				case SDL_SCANCODE_N: // next file
+					track=1;
+					filePointer++;
+					if(filePointer != files.end())
+					{
+						nextFile = *filePointer;
+					}
+					else
+					{
+						filePointer=files.begin();
+						nextFile = *filePointer;
+					}
+					nextFile.copy(path, nextFile.length());
+					path[nextFile.length()]='\0';
+					handle_error( player->load_file( path, by_mem ) );
+					start_track( track, path );
+					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 					break;
 
 				case SDL_SCANCODE_0: // reset tempo and muting
