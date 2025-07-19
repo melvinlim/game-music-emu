@@ -247,7 +247,6 @@ int main( int argc, char** argv )
 					echo_disabled = !echo_disabled;
 					player->set_echo_disable(echo_disabled);
 					snprintf(textBuffer, TBSZ,  "%s\n", echo_disabled ? "SPC echo is disabled" : "SPC echo is enabled" );
-					fflush( stdout );
 					break;
 
 				case SDL_SCANCODE_F: // toggle fadeout
@@ -258,7 +257,6 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
 					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
-					fflush( stdout );
 					break;
 
 				case SDL_SCANCODE_0: // reset tempo and muting
@@ -275,12 +273,11 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_UP: // Seek forward
 					player->seek_forward();
 					break;
-
+/*
 				case SDL_SCANCODE_H: // help
 					snprintf(textBuffer, TBSZ,  "%s\n", usage );
-					fflush( stdout );
 					break;
-
+*/
 				default:
 					if ( SDL_SCANCODE_1 <= key && key <= SDL_SCANCODE_9 ) // toggle muting
 					{
