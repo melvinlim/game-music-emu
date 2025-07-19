@@ -51,6 +51,17 @@ static Audio_Scope* scope;
 static Music_Player* player;
 static short scope_buf [scope_width * 2];
 
+static char textBuffer[2048] = {0};
+
+static void printInfo()
+{
+	ClearScreen();
+	printf( "%s\n", usage );
+	printf("%s\n", textBuffer);
+	printf("%d\n", player->get_time());
+	fflush(0);
+}
+
 static void init( void )
 {
 	// Start SDL
@@ -109,7 +120,6 @@ static void start_track( int track, const char* path )
 int main( int argc, char** argv )
 {
 	init();
-	printf( "%s\n", usage );
 
 	bool by_mem = false;
 	const char* path = "test.nsf";
@@ -138,9 +148,7 @@ int main( int argc, char** argv )
 	bool looping = false;
 	while ( running )
 	{
-		ClearScreen();
-		printf("%d\n", player->get_time());
-		fflush(0);
+		printInfo();
 		// Update scope
 		scope->draw( scope_buf, scope_width, 2 );
 
