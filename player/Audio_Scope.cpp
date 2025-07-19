@@ -79,6 +79,8 @@ Audio_Scope::Audio_Scope()
 {
 }
 
+#define SDL_FLAGS SDL_WINDOW_ALWAYS_ON_TOP
+
 Audio_Scope::~Audio_Scope()
 {
 	free( scope_lines );
@@ -108,11 +110,11 @@ std::string Audio_Scope::init( int width, int height )
 	v_offset = (height - largest_power_of_2_within(height)) / 2;
 
 	// What the user will see
-	window = SDL_CreateWindow( "libgme sample player",
+	window = SDL_CreateWindow( "libgme player",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			width, height,
-			0 /* no flags */ );
+			SDL_FLAGS );
 	RETURN_SDL_ERR( window, "Couldn't create output window" );
 
 	// Render object used to update window (perhaps in video or GPU ram)

@@ -140,6 +140,7 @@ int main( int argc, char** argv )
 
 	bool by_mem = false;
 	const char* path = "test.nsf";
+	std::list<std::string> files = getFileList();
 
 	for ( int i = 1; i < argc; ++i )
 	{

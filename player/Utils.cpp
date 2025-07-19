@@ -12,3 +12,37 @@ void ClearScreen()
 
 	putp( tigetstr( "clear" ) );
 }
+
+namespace fs = std::filesystem;
+
+std::list<std::string> getFileList()
+{
+	std::list<std::string> result;
+
+	std::filesystem::path directory_path = std::filesystem::current_path();
+	directory_path = std::filesystem::current_path();
+
+	if (!fs::exists(directory_path) || !fs::is_directory(directory_path)) {
+		std::cerr << "Error: Directory does not exist or is not a directory." << std::endl;
+		return result;
+	}
+
+	for (const auto& entry : fs::directory_iterator(directory_path)) {
+		if (fs::is_regular_file(entry.status())) {
+			std::string filename = entry.path().filename().string();
+			std::string extension = entry.path().extension().string();
+
+			//std::cout << "File: " << filename;
+			if (!extension.empty()) {
+				//std::cout << " (Extension: " << extension << ")";
+				if(extension == "nsf")
+				{
+					result.push_back(filename);
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	return result;
+}

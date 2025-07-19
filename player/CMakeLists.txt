@@ -26,7 +26,8 @@ if(SDL2_FOUND)
         ${PROJECT_SOURCE_DIR}/gme
     )
     set_property(TARGET gme_player PROPERTY CXX_STANDARD_REQUIRED ON)
-    set_property(TARGET gme_player PROPERTY CXX_STANDARD 11)
+		#set_property(TARGET gme_player PROPERTY CXX_STANDARD 11)
+    set_property(TARGET gme_player PROPERTY CXX_STANDARD 17)
     target_link_libraries(gme_player PRIVATE ${SDL2_LIBRARIES} gme::gme)
     # Is not to be installed though
     target_link_libraries(gme_player PRIVATE ncurses)
