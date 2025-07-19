@@ -54,13 +54,22 @@ static short scope_buf [scope_width * 2];
 #define TBSZ 2048
 static char textBuffer[TBSZ] = {0};
 
+static void printTime(int seconds)
+{
+	printw("(%02d:%02d)", seconds / 60, seconds % 60 );
+}
 static void printInfo()
 {
 	//ClearScreen();
 	move(0,0);
 	printw( "%s\n", usage );
 	printw("%s\n", textBuffer);
-	printw("%d\n", player->get_time());
+	//printw("%d\n", player->get_time());
+	printTime(player->get_time()/1000);
+	long seconds = player->track_info().length / 1000;
+	printw("/");
+	printTime(seconds);
+	printw("\n");
 	fflush(0);
 	refresh();
 }
@@ -153,7 +162,7 @@ int main( int argc, char** argv )
 	bool echo_disabled = false;
 	bool fading_out = true;
 	int muting_mask = 0;
-	bool looping = false;
+	bool looping = true;
 	while ( running )
 	{
 		printInfo();
