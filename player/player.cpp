@@ -37,7 +37,6 @@ Space       Pause/unpause
 E           Normal/slight stereo echo/more stereo echo
 D           Toggle echo processing
 A           Enable/disable accurate emulation
-H           Show help message
 L           Toggle track looping (infinite playback)
 -/=         Adjust tempo
 1-9         Toggle channel on/off
@@ -177,8 +176,8 @@ int main( int argc, char** argv )
 			}
 			else
 			{
-			if(!paused)
-				player->pause( paused = true );
+				if(!paused)
+					player->pause( paused = true );
 			}
 		}
 
@@ -228,6 +227,7 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_SPACE: // toggle pause
 					paused = !paused;
+					snprintf(textBuffer, TBSZ, paused ? "Music paused.\n": "Music unpaused.\n");
 					player->pause( paused );
 					break;
 

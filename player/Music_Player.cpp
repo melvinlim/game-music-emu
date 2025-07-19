@@ -242,12 +242,10 @@ void Music_Player::pause( int b )
 	paused = b;
 	if ( b )
 	{
-		printf("Music paused.\n");
 		sound_stop();
 	}
 	else
 	{
-		printf("Music unpaused.\n");
 		sound_start();
 	}
 }
