@@ -55,6 +55,7 @@ static short scope_buf [scope_width * 2];
 static char textBuffer[TBSZ] = {0};
 
 static std:: string nextFile;
+static char title [512];
 
 static void printTime(int seconds)
 {
@@ -71,6 +72,7 @@ static void printInfo()
 	printw("/");
 	printTime(seconds);
 	printw("\n");
+	printw("%s\n", title);
 	printw("%s\n", textBuffer);
 	fflush(0);
 	refresh();
@@ -126,13 +128,11 @@ static void start_track( int track, const char* path )
 			game++; // skip path separator
 	}
 
-	char title [512];
 	if ( 0 < snprintf( title, sizeof title, "%s: %d/%d %s (%ld:%02ld)",
 			game, track+1, player->track_count(), player->track_info().song,
 			seconds / 60, seconds % 60 ) )
 	{
 		scope->set_caption( title );
-		snprintf(textBuffer, TBSZ, title);
 	}
 }
 
