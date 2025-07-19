@@ -139,15 +139,23 @@ int main( int argc, char** argv )
 	init();
 
 	bool by_mem = false;
-	const char* path = "test.nsf";
+	//const char* path = "test.nsf";
+	char path[2048] = {0};
 	std::list<std::string> files = getFileList();
+	std::list<std::string>::iterator filePointer = files.begin();
+	if(files.size() > 0)
+	{
+		std:: string nextFile = *filePointer;
+		nextFile.copy(path, nextFile.length());
+		path[nextFile.length()]='\0';
+	}
 
 	for ( int i = 1; i < argc; ++i )
 	{
 		if ( SDL_strcmp( "-m", argv[i] ) == 0 )
 			by_mem = true;
-		else
-			path = argv[i];
+		//else
+			//path = argv[i];
 	}
 
 	// Main loop
@@ -329,6 +337,7 @@ static void handle_error( const char* error )
 		}
 		while ( e.type != SDL_QUIT && e.type != SDL_KEYDOWN && e.type != SDL_MOUSEBUTTONDOWN );
 
+		endwin();
 		exit( EXIT_FAILURE );
 	}
 }

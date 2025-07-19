@@ -35,7 +35,7 @@ std::list<std::string> getFileList()
 			//std::cout << "File: " << filename;
 			if (!extension.empty()) {
 				//std::cout << " (Extension: " << extension << ")";
-				if(extension == "nsf")
+				if(extension == ".nsf")
 				{
 					result.push_back(filename);
 				}
