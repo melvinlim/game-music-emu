@@ -200,7 +200,23 @@ int main( int argc, char** argv )
 				}
 				else
 				{
-					player->pause( paused = true );
+					//player->pause( paused = true );
+					track=0;
+					filePointer++;
+					if(filePointer != files.end())
+					{
+						nextFile = *filePointer;
+					}
+					else
+					{
+						filePointer=files.begin();
+						nextFile = *filePointer;
+					}
+					nextFile.copy(path, nextFile.length());
+					path[nextFile.length()]='\0';
+					handle_error( player->load_file( path, by_mem ) );
+					start_track( track++, path );
+					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 				}
 			}
 		}
