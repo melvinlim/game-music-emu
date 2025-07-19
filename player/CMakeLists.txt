@@ -13,6 +13,8 @@ set(player_SRCS Audio_Scope.cpp
                 Music_Player.h
                 Archive_Reader.cpp
                 Archive_Reader.h
+								Utils.cpp
+								Utils.h
                 player.cpp)
 
 if(SDL2_FOUND)
@@ -27,6 +29,7 @@ if(SDL2_FOUND)
     set_property(TARGET gme_player PROPERTY CXX_STANDARD 11)
     target_link_libraries(gme_player PRIVATE ${SDL2_LIBRARIES} gme::gme)
     # Is not to be installed though
+    target_link_libraries(gme_player PRIVATE ncurses)
 
     if(GME_UNRAR)
       if(UNRAR_FOUND)

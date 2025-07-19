@@ -22,6 +22,7 @@ static int const scope_height = 512;
 
 #include "Music_Player.h"
 #include "Audio_Scope.h"
+#include "Utils.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -137,8 +138,9 @@ int main( int argc, char** argv )
 	bool looping = false;
 	while ( running )
 	{
-		//printf("%d\n", player->get_time());
-		//fflush(0);
+		ClearScreen();
+		printf("%d\n", player->get_time());
+		fflush(0);
 		// Update scope
 		scope->draw( scope_buf, scope_width, 2 );
 
