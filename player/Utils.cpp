@@ -27,7 +27,7 @@ std::list<std::string> getFileList()
 		return result;
 	}
 
-	for (const auto& entry : fs::directory_iterator(directory_path)) {
+	for (const auto& entry : fs::recursive_directory_iterator(directory_path)) {
 		if (fs::is_regular_file(entry.status())) {
 			std::string filename = entry.path().filename().string();
 			std::string extension = entry.path().extension().string();
@@ -37,7 +37,8 @@ std::list<std::string> getFileList()
 				//std::cout << " (Extension: " << extension << ")";
 				if(extension == ".nsf")
 				{
-					result.push_back(filename);
+					//result.push_back(filename);
+					result.push_back(entry.path().string());
 				}
 			}
 			std::cout << std::endl;
