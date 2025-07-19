@@ -63,13 +63,13 @@ static void printInfo()
 	//ClearScreen();
 	move(0,0);
 	printw( "%s\n", usage );
-	printw("%s\n", textBuffer);
 	//printw("%d\n", player->get_time());
 	printTime(player->get_time()/1000);
 	long seconds = player->track_info().length / 1000;
 	printw("/");
 	printTime(seconds);
 	printw("\n");
+	printw("%s\n", textBuffer);
 	fflush(0);
 	refresh();
 }
@@ -149,10 +149,6 @@ int main( int argc, char** argv )
 			path = argv[i];
 	}
 
-	// Load file
-	handle_error( player->load_file( path, by_mem ) );
-	start_track( 1, path );
-
 	// Main loop
 	int track = 1;
 	double tempo = 1.0;
@@ -163,6 +159,11 @@ int main( int argc, char** argv )
 	bool fading_out = true;
 	int muting_mask = 0;
 	bool looping = true;
+
+	// Load file
+	handle_error( player->load_file( path, by_mem ) );
+	start_track( track++, path );
+
 	while ( running )
 	{
 		printInfo();
@@ -172,21 +173,21 @@ int main( int argc, char** argv )
 		// Automatically go to next track when current one ends
 		if ( player->track_ended() )
 		{
-			if(looping)
+			if ( track < player->track_count() )
 			{
-				snprintf(textBuffer, TBSZ, "Track %d ended.\n", track);
-				snprintf(textBuffer, TBSZ, "Looping.\n");
-				start_track( track, path );
-			}
-			else if ( track < player->track_count() )
-			{
-				snprintf(textBuffer, TBSZ, "Track %d ended.\n", track);
-				start_track( ++track, path );
+				start_track( track++, path );
 			}
 			else
 			{
-				if(!paused)
+				if(looping)
+				{
+					snprintf(textBuffer, TBSZ, "Looping.\n");
+					track = 1;
+				}
+				else
+				{
 					player->pause( paused = true );
+				}
 			}
 		}
 
