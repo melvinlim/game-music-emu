@@ -64,17 +64,17 @@ static char errorstr[256] = {0};
 static int loadedFiles = 0;
 
 // Main loop
-char path[2048] = {0};
-int track = 0;
-double tempo = 1.0;
-bool running = true;
-double stereo_depth = 0.0;
-bool accurate = false;
-bool echo_disabled = false;
-bool fading_out = false;
-int muting_mask = 0;
-bool looping = false;
-bool shuffle = true;
+static char path[2048] = {0};
+static int track = 0;
+static double tempo = 1.0;
+static bool running = true;
+static double stereo_depth = 0.0;
+static bool accurate = false;
+static bool echo_disabled = false;
+static bool fading_out = false;
+static int muting_mask = 0;
+static bool looping = false;
+static bool shuffle = true;
 
 static void printTime(int seconds)
 {
