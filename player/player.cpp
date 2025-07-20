@@ -219,38 +219,34 @@ int main( int argc, char** argv )
 		// Update scope
 		scope->draw( scope_buf, scope_width, 2 );
 
-		// Automatically go to next track when current one ends
 		if ( player->track_ended() )
 		{
-			if ( track < player->track_count() )
+			if(looping)
+			{
+				snprintf(textBuffer, TBSZ, "Looping.\n");
+				track--;
+				start_track( track++, path );
+			}
+			else if ( track < player->track_count() )
 			{
 				start_track( track++, path );
 			}
 			else
 			{
-				if(looping)
+				track=0;
+				filePointer++;
+				if(filePointer != files.end())
 				{
-					snprintf(textBuffer, TBSZ, "Looping.\n");
-					track = 0;
+					nextFile = *filePointer;
 				}
 				else
 				{
-					//player->pause( paused = true );
-					track=0;
-					filePointer++;
-					if(filePointer != files.end())
-					{
-						nextFile = *filePointer;
-					}
-					else
-					{
-						filePointer=files.begin();
-						nextFile = *filePointer;
-					}
-					nextFile.copy(path, nextFile.length());
-					path[nextFile.length()]='\0';
-					loadAndPlay();
+					filePointer=files.begin();
+					nextFile = *filePointer;
 				}
+				nextFile.copy(path, nextFile.length());
+				path[nextFile.length()]='\0';
+				loadAndPlay();
 			}
 		}
 
