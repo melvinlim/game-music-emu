@@ -323,7 +323,7 @@ void Music_Player::seek_backward()
 
 void Music_Player::set_fadeout( bool fade )
 {
-	gme_set_fade_msecs( emu_, fade ? track_info_->length : -1, 8000 );
+	gme_set_fade_msecs( emu_, fade ? track_info_->length : -1, 2000 );
 }
 
 void Music_Player::fill_buffer( void* data, sample_t* out, int count )
