@@ -58,6 +58,7 @@ static char textBuffer[TBSZ] = {0};
 static std:: string nextFile;
 static char title [512];
 static char info_track_num[256] = {0};
+static char errorstr[256] = {0};
 
 static void printTime(int seconds)
 {
@@ -77,6 +78,11 @@ static void printInfo()
 	printw("%s\n", title);
 	printw("%s\n", info_track_num);
 	printw("%s\n", textBuffer);
+	const char *errPtr=player->get_error();
+	if(errPtr){
+		strcpy(errorstr, errPtr);
+	}
+	printw("%s\n", errorstr);
 	refresh();
 }
 

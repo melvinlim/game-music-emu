@@ -71,6 +71,8 @@ public:
 
 	int get_time();
 
+	const char *get_error();
+
 public:
 	Music_Player();
 	~Music_Player();
