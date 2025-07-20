@@ -416,11 +416,10 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_UP: // Seek forward
 					player->seek_forward();
 					break;
-/*
-				case SDL_SCANCODE_H: // help
-					snprintf(textBuffer, TBSZ,  "%s\n", usage );
+				case SDL_SCANCODE_S:
+					shuffle = !shuffle;
+					snprintf(textBuffer, TBSZ, "Shuffle mode %s.\n", (shuffle ? "on" : "off"));
 					break;
-*/
 				default:
 					if ( SDL_SCANCODE_1 <= key && key <= SDL_SCANCODE_9 ) // toggle muting
 					{
