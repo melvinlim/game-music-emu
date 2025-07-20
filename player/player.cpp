@@ -169,7 +169,7 @@ int main( int argc, char** argv )
 	double stereo_depth = 0.0;
 	bool accurate = false;
 	bool echo_disabled = false;
-	bool fading_out = true;
+	bool fading_out = false;
 	int muting_mask = 0;
 	bool looping = false;
 
@@ -293,7 +293,7 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_F: // toggle fadeout
 					player->set_fadeout( fading_out = !fading_out );
-					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "8 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
+					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "2 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
 					break;
 
 				case SDL_SCANCODE_L: // toggle loop
