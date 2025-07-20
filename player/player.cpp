@@ -33,8 +33,8 @@ static int const scope_height = 512;
 static const char *usage = R"(
 Left/Right  Change track
 Up/Down     Seek one second forward/backward (if possible)
+N/P         Play next/previous file
 Space       Pause/unpause
-N           Play next file
 E           Normal/slight stereo echo/more stereo echo
 D           Toggle echo processing
 A           Enable/disable accurate emulation
@@ -299,6 +299,19 @@ int main( int argc, char** argv )
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
 					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
+					break;
+
+				case SDL_SCANCODE_P: // prev file
+					track=0;
+					if(filePointer != files.begin()){
+						filePointer--;
+					}
+					nextFile = *filePointer;
+					nextFile.copy(path, nextFile.length());
+					path[nextFile.length()]='\0';
+					handle_error( player->load_file( path, by_mem ) );
+					start_track( track++, path );
+					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 					break;
 
 				case SDL_SCANCODE_N: // next file
