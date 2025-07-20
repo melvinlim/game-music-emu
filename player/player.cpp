@@ -341,7 +341,7 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
-					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Will play next track or stop at track end" : "Playing current track forever" );
+					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Playing current track forever" : "Will play next track or stop at track end");
 					break;
 
 				case SDL_SCANCODE_P: // prev file
