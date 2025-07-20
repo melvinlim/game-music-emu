@@ -63,6 +63,19 @@ static char errorstr[256] = {0};
 
 static int loadedFiles = 0;
 
+// Main loop
+char path[2048] = {0};
+int track = 0;
+double tempo = 1.0;
+bool running = true;
+double stereo_depth = 0.0;
+bool accurate = false;
+bool echo_disabled = false;
+bool fading_out = false;
+int muting_mask = 0;
+bool looping = false;
+bool shuffle = true;
+
 static void printTime(int seconds)
 {
 	printw("(%02d:%02d)", seconds / 60, seconds % 60 );
@@ -153,8 +166,6 @@ int main( int argc, char** argv )
 	init();
 
 	bool by_mem = false;
-	//const char* path = "test.nsf";
-	char path[2048] = {0};
 	std::list<std::string> files = getFileList();
 	std::list<std::string>::iterator filePointer = files.begin();
 	loadedFiles = files.size();
@@ -176,18 +187,6 @@ int main( int argc, char** argv )
 		//else
 			//path = argv[i];
 	}
-
-	// Main loop
-	int track = 0;
-	double tempo = 1.0;
-	bool running = true;
-	double stereo_depth = 0.0;
-	bool accurate = false;
-	bool echo_disabled = false;
-	bool fading_out = false;
-	int muting_mask = 0;
-	bool looping = false;
-	bool shuffle = true;
 
 	srand(time(0));
 
