@@ -72,7 +72,7 @@ static int track = 0;
 static double tempo = 1.0;
 static bool running = true;
 static double stereo_depth = 0.0;
-static bool accurate = false;
+static bool accurate = true;
 static bool echo_disabled = false;
 static bool fading_out = false;
 static int muting_mask = 0;
@@ -180,6 +180,7 @@ static void loadAndPlay(){
 		track = rand() % player->track_count();
 	}
 	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
+	player->enable_accuracy( accurate );
 	start_track( track++, path );
 }
 
