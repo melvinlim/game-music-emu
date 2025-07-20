@@ -322,7 +322,7 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_F: // toggle fadeout
 					player->set_fadeout( fading_out = !fading_out );
-					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "2 seconds of fade out between songs." : "No fade out between songs.  May cause songs to play forever or a really long time." );
+					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "2 seconds of fade out between songs." : "No fade out between songs." );
 					break;
 
 				case SDL_SCANCODE_L: // toggle loop
