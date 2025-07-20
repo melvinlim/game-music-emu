@@ -64,6 +64,9 @@ static char errorstr[256] = {0};
 static int loadedFiles = 0;
 
 // Main loop
+std::list<std::string> files;
+std::list<std::string>::iterator filePointer;
+static bool by_mem = false;
 static char path[2048] = {0};
 static int track = 0;
 static double tempo = 1.0;
@@ -161,13 +164,31 @@ static void start_track( int track, const char* path )
 	}
 }
 
+static void loadAndPlay(){
+	if(shuffle)
+	{
+		filePointer = files.begin();
+		int randOffset = rand() % loadedFiles;
+		for(int ivar = 0; ivar++ < randOffset ; filePointer++);
+		nextFile = *filePointer;
+		nextFile.copy(path, nextFile.length());
+		path[nextFile.length()]='\0';
+	}
+	handle_error( player->load_file( path, by_mem ) );
+	if(shuffle)
+	{
+		track = rand() % player->track_count();
+	}
+	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
+	start_track( track++, path );
+}
+
 int main( int argc, char** argv )
 {
 	init();
 
-	bool by_mem = false;
-	std::list<std::string> files = getFileList();
-	std::list<std::string>::iterator filePointer = files.begin();
+	files = getFileList();
+	filePointer = files.begin();
 	loadedFiles = files.size();
 	if(loadedFiles > 0)
 	{
@@ -190,22 +211,7 @@ int main( int argc, char** argv )
 
 	srand(time(0));
 
-	if(shuffle)
-	{
-		filePointer = files.begin();
-		int randOffset = rand() % loadedFiles;
-		for(int ivar = 0; ivar++ < randOffset ; filePointer++);
-		nextFile = *filePointer;
-		nextFile.copy(path, nextFile.length());
-		path[nextFile.length()]='\0';
-	}
-	handle_error( player->load_file( path, by_mem ) );
-	if(shuffle)
-	{
-		track = rand() % player->track_count();
-	}
-	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
-	start_track( track++, path );
+	loadAndPlay();
 
 	while ( running )
 	{
