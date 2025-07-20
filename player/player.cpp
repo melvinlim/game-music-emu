@@ -60,6 +60,7 @@ static std:: string nextFile;
 static char title [512];
 static char info_track_num[256] = {0};
 static char errorstr[256] = {0};
+static char extra_info[256] = {0};
 
 static int loadedFiles = 0;
 
@@ -94,8 +95,9 @@ static void printInfo()
 	printw("/");
 	printTime(seconds);
 	printw("\n");
-	printw("%s\n", title);
-	printw("%s\n", info_track_num);
+	//printw("%s\n", title);
+	printw("\n%s\n", extra_info);
+	printw("\n%s\n", info_track_num);
 	printw("%s\n", textBuffer);
 	const char *errPtr=player->get_error();
 	if(errPtr){
@@ -160,6 +162,17 @@ static void start_track( int track, const char* path )
 			game, track+1, player->track_count(), player->track_info().song,
 			seconds / 60, seconds % 60 ) )
 	{
+		//snprintf( extra_info, sizeof extra_info, "%s, %s, %s, author: %s, %s, %s, ripper: %s",
+		snprintf( extra_info, sizeof extra_info, "%s, %s\nsong: %s\nauthor: %s\n%s\n%s\nripper: %s",
+			player->track_info().system,
+			player->track_info().game,
+			player->track_info().song,
+			player->track_info().author,
+			player->track_info().copyright,
+			player->track_info().comment,
+			player->track_info().dumper
+		);
+		
 		scope->set_caption( title );
 	}
 }
