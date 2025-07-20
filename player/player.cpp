@@ -249,22 +249,7 @@ int main( int argc, char** argv )
 					}
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
-					if(shuffle)
-					{
-						filePointer = files.begin();
-						int randOffset = rand() % loadedFiles;
-						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
-						nextFile = *filePointer;
-						nextFile.copy(path, nextFile.length());
-						path[nextFile.length()]='\0';
-					}
-					handle_error( player->load_file( path, by_mem ) );
-					if(shuffle)
-					{
-						track = rand() % player->track_count();
-					}
-					start_track( track++, path );
-					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
+					loadAndPlay();
 				}
 			}
 		}
@@ -357,22 +342,7 @@ int main( int argc, char** argv )
 					nextFile = *filePointer;
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
-					if(shuffle)
-					{
-						filePointer = files.begin();
-						int randOffset = rand() % loadedFiles;
-						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
-						nextFile = *filePointer;
-						nextFile.copy(path, nextFile.length());
-						path[nextFile.length()]='\0';
-					}
-					handle_error( player->load_file( path, by_mem ) );
-					if(shuffle)
-					{
-						track = rand() % player->track_count();
-					}
-					start_track( track++, path );
-					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
+					loadAndPlay();
 					break;
 
 				case SDL_SCANCODE_N: // next file
@@ -389,22 +359,7 @@ int main( int argc, char** argv )
 					}
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
-					if(shuffle)
-					{
-						filePointer = files.begin();
-						int randOffset = rand() % loadedFiles;
-						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
-						nextFile = *filePointer;
-						nextFile.copy(path, nextFile.length());
-						path[nextFile.length()]='\0';
-					}
-					handle_error( player->load_file( path, by_mem ) );
-					if(shuffle)
-					{
-						track = rand() % player->track_count();
-					}
-					start_track( track++, path );
-					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
+					loadAndPlay();
 					break;
 
 				case SDL_SCANCODE_0: // reset tempo and muting
