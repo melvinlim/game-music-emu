@@ -61,6 +61,8 @@ static char title [512];
 static char info_track_num[256] = {0};
 static char errorstr[256] = {0};
 
+static int loadedFiles = 0;
+
 static void printTime(int seconds)
 {
 	printw("(%02d:%02d)", seconds / 60, seconds % 60 );
@@ -155,11 +157,16 @@ int main( int argc, char** argv )
 	char path[2048] = {0};
 	std::list<std::string> files = getFileList();
 	std::list<std::string>::iterator filePointer = files.begin();
-	if(files.size() > 0)
+	loadedFiles = files.size();
+	if(loadedFiles > 0)
 	{
 		nextFile = *filePointer;
 		nextFile.copy(path, nextFile.length());
 		path[nextFile.length()]='\0';
+	}
+	else
+	{
+		handle_error("failed to locate any files in the current directory.  please run this application from a directory containing nsf/smc/vgm/vgz files.");
 	}
 
 	for ( int i = 1; i < argc; ++i )
@@ -180,9 +187,24 @@ int main( int argc, char** argv )
 	bool fading_out = false;
 	int muting_mask = 0;
 	bool looping = false;
+	bool shuffle = true;
 
-	// Load file
+	srand(time(0));
+
+	if(shuffle)
+	{
+		filePointer = files.begin();
+		int randOffset = rand() % loadedFiles;
+		for(int ivar = 0; ivar++ < randOffset ; filePointer++);
+		nextFile = *filePointer;
+		nextFile.copy(path, nextFile.length());
+		path[nextFile.length()]='\0';
+	}
 	handle_error( player->load_file( path, by_mem ) );
+	if(shuffle)
+	{
+		track = rand() % player->track_count();
+	}
 	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 	start_track( track++, path );
 
@@ -222,7 +244,20 @@ int main( int argc, char** argv )
 					}
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
+					if(shuffle)
+					{
+						filePointer = files.begin();
+						int randOffset = rand() % loadedFiles;
+						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
+						nextFile = *filePointer;
+						nextFile.copy(path, nextFile.length());
+						path[nextFile.length()]='\0';
+					}
 					handle_error( player->load_file( path, by_mem ) );
+					if(shuffle)
+					{
+						track = rand() % player->track_count();
+					}
 					start_track( track++, path );
 					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 				}
@@ -317,7 +352,20 @@ int main( int argc, char** argv )
 					nextFile = *filePointer;
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
+					if(shuffle)
+					{
+						filePointer = files.begin();
+						int randOffset = rand() % loadedFiles;
+						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
+						nextFile = *filePointer;
+						nextFile.copy(path, nextFile.length());
+						path[nextFile.length()]='\0';
+					}
 					handle_error( player->load_file( path, by_mem ) );
+					if(shuffle)
+					{
+						track = rand() % player->track_count();
+					}
 					start_track( track++, path );
 					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 					break;
@@ -336,7 +384,20 @@ int main( int argc, char** argv )
 					}
 					nextFile.copy(path, nextFile.length());
 					path[nextFile.length()]='\0';
+					if(shuffle)
+					{
+						filePointer = files.begin();
+						int randOffset = rand() % loadedFiles;
+						for(int ivar = 0; ivar++ < randOffset ; filePointer++);
+						nextFile = *filePointer;
+						nextFile.copy(path, nextFile.length());
+						path[nextFile.length()]='\0';
+					}
 					handle_error( player->load_file( path, by_mem ) );
+					if(shuffle)
+					{
+						track = rand() % player->track_count();
+					}
 					start_track( track++, path );
 					snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 					break;
