@@ -202,6 +202,7 @@ gme_err_t Music_Player::load_file(const char* path , bool by_mem)
 	strcpy( p, ".m3u" );
 	if ( gme_load_m3u( emu_, m3u_path ) ) { } // ignore error
 
+	//gme_ignore_silence(emu_, 1);
 	return 0;
 }
 

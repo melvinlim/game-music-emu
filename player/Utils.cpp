@@ -15,7 +15,7 @@ void ClearScreen()
 
 namespace fs = std::filesystem;
 
-std::vector<std::string> supportedExt = {".nsf", ".vgm", ".spc"};
+std::vector<std::string> supportedExt = {".nsf", ".vgm", ".vgz", ".spc"};
 
 std::list<std::string> getFileList()
 {
