@@ -28,6 +28,7 @@ static int const scope_height = 512;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include <time.h>
 #include "SDL.h"
 
 static const char *usage = R"(
@@ -80,7 +81,8 @@ static void printInfo()
 	printw("%s\n", textBuffer);
 	const char *errPtr=player->get_error();
 	if(errPtr){
-		strcpy(errorstr, errPtr);
+		time_t seconds_since_epoch = time(0);
+		snprintf(errorstr, sizeof errorstr, "%ld: %s", seconds_since_epoch, errPtr);
 	}
 	printw("%s\n", errorstr);
 	refresh();
