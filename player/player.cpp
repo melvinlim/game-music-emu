@@ -96,7 +96,7 @@ static void printInfo()
 	printw("/");
 	printTime(seconds);
 	printw("\n");
-	//printw("%s\n", title);
+	printw("%s\n", path);
 	printw("\n%s\n", extra_info);
 	printw("\n%s\n", info_track_num);
 	printw("%s\n", textBuffer);
@@ -227,7 +227,6 @@ static void loadAndPlay(){
 	{
 		track = rand() % player->track_count();
 	}
-	snprintf(textBuffer, TBSZ, "Loaded file: %s\n", path);
 	player->enable_accuracy( accurate );
 	start_track( track++, path );
 }
@@ -376,7 +375,7 @@ int main( int argc, char** argv )
 
 				case SDL_SCANCODE_L: // toggle loop
 					looping = !looping;
-					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Playing current track forever" : "Will play next track or stop at track end");
+					snprintf(textBuffer, TBSZ,  "%s\n", looping ? "Playing current track forever" : "Will play next file or track at track end");
 					break;
 
 				case SDL_SCANCODE_P: // prev file
