@@ -47,5 +47,7 @@ std::list<std::string> getFileList()
 		}
 	}
 
+	result.sort();
+
 	return result;
 }

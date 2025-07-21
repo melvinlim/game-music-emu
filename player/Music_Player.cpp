@@ -119,8 +119,6 @@ gme_err_t Music_Player::load_file(const char* path , bool by_mem)
 
 	if ( by_mem )
 	{
-		//printf( "Loading file %s by memory...\n", path );
-		//fflush( stdout );
 
 		SDL_RWops *file = SDL_RWFromFile(path, "rb");
 
@@ -148,8 +146,6 @@ gme_err_t Music_Player::load_file(const char* path , bool by_mem)
 	}
 	else
 	{
-		//printf( "Loading file %s by file path...\n", path );
-		//fflush( stdout );
 
 		const arc_type_t* arc = identify_archive( path );
 		if ( arc )
