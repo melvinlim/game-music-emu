@@ -105,6 +105,14 @@ static void printInfo()
 		snprintf(errorstr, sizeof errorstr, "%ld: %s", seconds_since_epoch, errPtr);
 	}
 	printw("%s\n", errorstr);
+
+/*
+	printw("looplen:  %d\n",player->track_info().loop_length);
+	printw("introlen: %d\n",player->track_info().intro_length);
+	printw("fadelen:  %d\n",player->track_info().fade_length);
+	printw("playlen:  %d\n",player->track_info().play_length);
+*/
+
 	refresh();
 }
 
