@@ -192,8 +192,8 @@ static void start_track( int track, const char* path )
 	%s\n\
 	ripper: %s",
 			player->track_info().system,
-			game,
-			player->track_info().song,
+			player->track_info().game,
+			*player->track_info().song ? player->track_info().song : game,
 			player->track_info().author,
 			player->track_info().copyright,
 			player->track_info().comment,
