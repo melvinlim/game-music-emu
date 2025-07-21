@@ -171,7 +171,14 @@ static void start_track( int track, const char* path )
 			seconds / 60, seconds % 60 ) )
 	{
 		//snprintf( extra_info, sizeof extra_info, "%s, %s, %s, author: %s, %s, %s, ripper: %s",
-		snprintf( extra_info, sizeof extra_info, "%s, %s\nsong: %s\nauthor: %s\n%s\n%s\nripper: %s",
+		snprintf( extra_info, sizeof extra_info,"\
+	system: %s\n\
+	game:   %s\n\
+	song:   %s\n\
+	author: %s\n\
+	%s\n\
+	%s\n\
+	ripper: %s",
 			player->track_info().system,
 			player->track_info().game,
 			player->track_info().song,
