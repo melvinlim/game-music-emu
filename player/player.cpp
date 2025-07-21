@@ -209,7 +209,10 @@ static void loadAndPlay(){
 	if(shuffle)
 	{
 		filePointer = files.begin();
-		int randOffset = rand() % (loadedFiles - 1);
+		int randOffset=0;
+		if(loadedFiles > 1){
+			randOffset = rand() % (loadedFiles - 1);
+		}
 		randOffset = (prevFileOffset + randOffset) % loadedFiles;
 		prevFileOffset = randOffset;
 		for(int ivar = 0; ivar++ < randOffset ; filePointer++);
