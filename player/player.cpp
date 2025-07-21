@@ -204,6 +204,7 @@ static void start_track( int track, const char* path )
 }
 
 static void loadAndPlay(){
+	muting_mask = 0;
 	if(shuffle)
 	{
 		filePointer = files.begin();
