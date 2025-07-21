@@ -249,11 +249,7 @@ int main( int argc, char** argv )
 				track--;
 				start_track( track++, path );
 			}
-			else if ( track < player->track_count() )
-			{
-				start_track( track++, path );
-			}
-			else
+			else if ((shuffle) || (track >= player->track_count()))
 			{
 				track=0;
 				filePointer++;
@@ -269,6 +265,10 @@ int main( int argc, char** argv )
 				nextFile.copy(path, nextFile.length());
 				path[nextFile.length()]='\0';
 				loadAndPlay();
+			}
+			else
+			{
+				start_track( track++, path );
 			}
 		}
 
