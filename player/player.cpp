@@ -60,7 +60,7 @@ static std:: string nextFile;
 static char title [512];
 static char info_track_num[256] = {0};
 static char errorstr[256] = {0};
-static char extra_info[256] = {0};
+static char extra_info[512] = {0};
 
 static int loadedFiles = 0;
 
@@ -180,7 +180,7 @@ static void start_track( int track, const char* path )
 	%s\n\
 	ripper: %s",
 			player->track_info().system,
-			player->track_info().game,
+			game,
 			player->track_info().song,
 			player->track_info().author,
 			player->track_info().copyright,
