@@ -79,6 +79,7 @@ static bool fading_out = false;
 static int muting_mask = 0;
 static bool looping = false;
 static bool shuffle = true;
+static int prevFileOffset = 0;
 
 static void printTime(int seconds)
 {
@@ -208,7 +209,9 @@ static void loadAndPlay(){
 	if(shuffle)
 	{
 		filePointer = files.begin();
-		int randOffset = rand() % loadedFiles;
+		int randOffset = rand() % (loadedFiles - 1);
+		randOffset = (prevFileOffset + randOffset) % loadedFiles;
+		prevFileOffset = randOffset;
 		for(int ivar = 0; ivar++ < randOffset ; filePointer++);
 		nextFile = *filePointer;
 		nextFile.copy(path, nextFile.length());
