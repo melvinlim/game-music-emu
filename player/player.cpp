@@ -113,6 +113,17 @@ static void printInfo()
 	printw("playlen:  %d\n",player->track_info().play_length);
 */
 
+	int voicecount=player->get_voice_count();
+	printw("voice count: %d\n",voicecount);
+	for(int i=0;i<voicecount;i++)
+	{
+		printw("voice %d: %s\n", i, player->get_voice_name(i));
+	}
+	for(int i=voicecount;i<8;i++){
+		clrtoeol();
+		printw("\n");
+	}
+
 	refresh();
 }
 

@@ -73,6 +73,10 @@ public:
 
 	const char *get_error();
 
+	int get_voice_count();
+
+	const char* get_voice_name(int i);
+
 public:
 	Music_Player();
 	~Music_Player();

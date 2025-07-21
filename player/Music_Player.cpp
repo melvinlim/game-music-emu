@@ -300,6 +300,16 @@ void Music_Player::mute_voices( int mask )
 	resume();
 }
 
+int Music_Player::get_voice_count()
+{
+	return gme_voice_count(emu_);
+}
+
+const char* Music_Player::get_voice_name(int i)
+{
+	return gme_voice_name(emu_, i);
+}
+
 void Music_Player::seek_forward()
 {
 	suspend();
