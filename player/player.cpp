@@ -117,7 +117,7 @@ static void printInfo()
 	printw("voice count: %d\n",voicecount);
 	for(int i=0;i<voicecount;i++)
 	{
-		printw("voice %d: %s\n", i+1, player->get_voice_name(i));
+		printw("voice %d: %s %s\n", i+1, player->get_voice_name(i), (muting_mask&(1<<i)) ? "[MUTED]" : "");
 	}
 	for(int i=voicecount;i<8;i++){
 		clrtoeol();
