@@ -63,6 +63,8 @@ static inline int command_len( int command )
 			return 6;
 		case 0x93:
 			return 11;
+		case 0x68:
+			return 12;
 	}
 	switch ( command >> 4 )
 	{
@@ -281,8 +283,8 @@ blip_time_t Vgm_Emu_Impl::run_commands( vgm_time_t end_time )
 					break;
 
 				default:
-					pos += command_len( cmd ) - 1;
-					if(cmd > 0x31)		//0x31 is the smallest vgm opcode according to https://vgmrips.net/wiki/VGM_Specification#Commands
+					pos += command_len( cmd );
+					if(cmd >= 0x30)		//0x30 is the smallest vgm opcode according to https://vgmrips.net/wiki/VGM_Specification#Commands
 					{
 						snprintf(errstr, sizeof errstr, "Unknown stream event: 0x%x", cmd);
 						set_warning( errstr );
