@@ -48,6 +48,22 @@ enum {
 
 static inline int command_len( int command )
 {
+	switch ( command)
+	{
+		case 0x50:
+		case 0x94:
+			return 2;
+		case 0x40:
+			return 3;
+		case 0x90:
+		case 0x91:
+		case 0x95:
+			return 5;
+		case 0x92:
+			return 6;
+		case 0x93:
+			return 11;
+	}
 	switch ( command >> 4 )
 	{
 		case 0x03:
