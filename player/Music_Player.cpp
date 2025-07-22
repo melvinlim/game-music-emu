@@ -333,8 +333,11 @@ void Music_Player::set_fadeout( bool fade )
 	gme_set_fade_msecs( emu_, fade ? track_info_->length : 1, 2000 );
 }
 
+static int maxval=0;
+
 void Music_Player::fill_buffer( void* data, sample_t* out, int count )
 {
+	maxval=0;
 	Music_Player* self = (Music_Player*) data;
 	if ( self->emu_ )
 	{
@@ -342,6 +345,12 @@ void Music_Player::fill_buffer( void* data, sample_t* out, int count )
 
 		if ( self->scope_buf )
 			memcpy( self->scope_buf, out, self->scope_buf_size * sizeof *self->scope_buf );
+
+		for(int i=0; i<count; i++)
+		{
+			if(out[i] > maxval)	maxval = out[i];
+		}
+		//printf("%d\n", maxval);
 	}
 }
 

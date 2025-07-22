@@ -24,9 +24,6 @@ static int const silence_threshold = 0x10;
 static long const fade_block_size = 512;
 static int const fade_shift = 8; // fade ends with gain at 1.0 / (1 << fade_shift)
 
-static char errstr[256] = {0};
-static int maxval=0;
-
 using std::min;
 using std::max;
 
@@ -380,20 +377,6 @@ static long count_silence( Music_Emu::sample_t* begin, long size )
 	return size - (p - begin);
 }
 
-long Music_Emu::findmax( Music_Emu::sample_t* begin, long size )
-{
-	Music_Emu::sample_t first = *begin;
-	*begin = 0;
-	Music_Emu::sample_t* p = begin + size;
-	while ( *--p > 0 ) {
-		if(*p > maxval)	maxval = *p;
-	}
-	snprintf(errstr, sizeof errstr, "%d", maxval);
-	set_warning(errstr);
-	*begin = first;
-	return size - (p - begin);
-}
-
 // fill internal buffer and check it for silence
 void Music_Emu::fill_buf()
 {
@@ -414,8 +397,6 @@ void Music_Emu::fill_buf()
 
 blargg_err_t Music_Emu::play( long out_count, sample_t* out )
 {
-	maxval=0;
-	findmax( out, out_count );
 	if ( track_ended_ )
 	{
 		memset( out, 0, out_count * sizeof *out );
