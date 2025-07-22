@@ -68,7 +68,7 @@ static int loadedFiles = 0;
 std::list<std::string> files;
 std::list<std::string>::iterator filePointer;
 static bool by_mem = false;
-static char path[2048] = {0};
+static char path[1024] = {0};
 static int track = 0;
 static double tempo = 1.0;
 static bool running = true;
@@ -81,7 +81,7 @@ static bool looping = false;
 static bool shuffle = true;
 static int prevFileOffset = 0;
 
-static char errBuffer[2048] = {0};
+static char errBuffer[4096] = {0};
 static char* errBufPtr = errBuffer;
 
 //static int songMaxval = 0;
@@ -136,16 +136,15 @@ static void printInfo()
 	//printw( "%d \n", songMaxval );
 
 	const char *errPtr=player->get_error();
-	static char errStr[256] = {0};
+	static char errStr[2048] = {0};
 	if(errPtr){
 		time_t seconds_since_epoch = time(0);
-		//snprintf(errBufPtr, errBuffer + 2048 - errBufPtr, "%ld: %s\n", seconds_since_epoch, errPtr);
-		snprintf(errStr, sizeof errStr, "%ld: %s\n", seconds_since_epoch, errPtr);
-		snprintf(errBufPtr, errBuffer + 2048 - errBufPtr, "%s", errStr);
+		snprintf(errStr, sizeof errStr, "%ld: %s: %s\n", seconds_since_epoch, path, errPtr);
+		snprintf(errBufPtr, errBuffer + sizeof errBuffer - errBufPtr, "%s", errStr);
 		errBufPtr += strlen(errStr);
-		if(errBufPtr > errBuffer + 2048)	errBufPtr = errBuffer;
+		if(errBufPtr > errBuffer + sizeof errBuffer)	errBufPtr = errBuffer;
 	}
-	printw("%s", errBuffer);
+	printw("\n%s", errBuffer);
 
 	refresh();
 }
