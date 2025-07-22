@@ -10,6 +10,10 @@
 #include "Ym2612_Emu.h"
 #include "Sms_Apu.h"
 
+#include <stdio.h>
+
+static char errstr[256];
+
 template<class Emu>
 class Ym_Emu : public Emu {
 protected:

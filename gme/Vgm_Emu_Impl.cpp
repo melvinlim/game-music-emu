@@ -266,7 +266,11 @@ blip_time_t Vgm_Emu_Impl::run_commands( vgm_time_t end_time )
 
 				default:
 					pos += command_len( cmd ) - 1;
-					set_warning( "Unknown stream event" );
+					if(cmd)
+					{
+						snprintf(errstr, sizeof errstr, "Unknown stream event: 0x%x", cmd);
+						set_warning( errstr );
+					}
 			}
 		}
 	}
