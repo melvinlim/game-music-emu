@@ -76,6 +76,8 @@ public:
 
 	const char* get_voice_name(int i);
 
+	int get_maxval()	{ return maxval; }
+
 public:
 	Music_Player();
 	~Music_Player();
@@ -90,6 +92,8 @@ private:
 	void suspend();
 	void resume();
 	static void fill_buffer( void*, sample_t*, int );
+
+	int maxval;
 };
 
 // Use to force disable exceptions for a specific allocation no matter what class

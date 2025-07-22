@@ -335,12 +335,10 @@ void Music_Player::set_fadeout( int fadems )
 			gme_set_fade_msecs(emu_, track_info_->length - fadems, fadems);
 }
 
-static int maxval=0;
-
 void Music_Player::fill_buffer( void* data, sample_t* out, int count )
 {
-	maxval=0;
 	Music_Player* self = (Music_Player*) data;
+	self->maxval=0;
 	if ( self->emu_ )
 	{
 		if ( gme_play( self->emu_, count, out ) ) { } // ignore error
@@ -350,9 +348,9 @@ void Music_Player::fill_buffer( void* data, sample_t* out, int count )
 
 		for(int i=0; i<count; i++)
 		{
-			if(out[i] > maxval)	maxval = out[i];
+			if(out[i] > self->maxval)	self->maxval = out[i];
 		}
-		//printf("%d\n", maxval);
+		//printf("%d\n", self->maxval);
 	}
 }
 
