@@ -226,7 +226,7 @@ gme_err_t Music_Player::start_track( int track )
 
 		if ( track_info_->length <= 0 )
 			track_info_->length = (long) (2.5 * 60 * 1000);
-		gme_set_fade_msecs( emu_, track_info_->length, 1 );
+		//gme_set_fade_msecs( emu_, track_info_->length, 1 );
 
 		paused = false;
 		sound_start();
@@ -328,9 +328,11 @@ void Music_Player::seek_backward()
 	resume();
 }
 
-void Music_Player::set_fadeout( bool fade )
+void Music_Player::set_fadeout( int fadems )
 {
-	gme_set_fade_msecs( emu_, fade ? track_info_->length : 1, 2000 );
+	if(track_info_)
+		if(track_info_->length > 0)
+			gme_set_fade_msecs(emu_, track_info_->length - fadems, fadems);
 }
 
 static int maxval=0;

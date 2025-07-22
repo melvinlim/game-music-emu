@@ -75,7 +75,7 @@ static bool running = true;
 static double stereo_depth = 0.0;
 static bool accurate = true;
 static bool echo_disabled = false;
-static bool fading_out = false;
+static bool fading_out = true;
 static int muting_mask = 0;
 static bool looping = false;
 static bool shuffle = true;
@@ -110,6 +110,11 @@ static void printInfo()
 	printw("fadelen:  %d\n",player->track_info().fade_length);
 	printw("playlen:  %d\n",player->track_info().play_length);
 */
+
+	if(player->track_info().fade_length > 0)
+	{
+		printw("fadelen:  %d\n",player->track_info().fade_length);
+	}
 
 	int voicecount=player->get_voice_count();
 	printw("voice count: %d\n",voicecount);
@@ -211,6 +216,14 @@ static void start_track( int track, const char* path )
 		);
 		
 		scope->set_caption( title );
+	}
+	if(player->track_info().fade_length > 0)
+	{
+		player->set_fadeout(player->track_info().fade_length);
+	}
+	else
+	{
+		player->set_fadeout(fading_out ? 2000 : 1);
 	}
 }
 
@@ -379,7 +392,8 @@ int main( int argc, char** argv )
 					break;
 
 				case SDL_SCANCODE_F: // toggle fadeout
-					player->set_fadeout( fading_out = !fading_out );
+					fading_out = !fading_out;
+					player->set_fadeout(fading_out ? 2000 : 1);
 					snprintf(textBuffer, TBSZ,  "%s\n", fading_out ? "2 seconds of fade out between songs." : "No fade out between songs." );
 					break;
 

@@ -61,9 +61,8 @@ public:
 	// Move back to 1 second
 	void seek_backward();
 
-	// Toggle whether fadeout is used or not. If used, stops at track length,
-	// if not used, loop forever
-	void set_fadeout( bool do_fade );
+	// Set fadeout length in milliseconds.  Set to 1 to turn off fadeout.
+	void set_fadeout( int fadems );
 
 	// Set buffer to copy samples from each buffer into, or NULL to disable
 	typedef short sample_t;
