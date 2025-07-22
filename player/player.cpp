@@ -84,6 +84,8 @@ static int prevFileOffset = 0;
 static char errBuffer[2048] = {0};
 static char* errBufPtr = errBuffer;
 
+//static int songMaxval = 0;
+
 static void printTime(int seconds)
 {
 	printw("(%02d:%02d)", seconds / 60, seconds % 60 );
@@ -127,6 +129,11 @@ static void printInfo()
 		printw("\n");
 	}
 	printw("\n");
+
+	clrtoeol();
+	printw( "%.*s \n", int (player->get_maxval()*40/16384), "**************************************************************************************" );				//16384 = 2**16/4
+	//if( player->get_maxval() > songMaxval )	songMaxval = player->get_maxval();
+	//printw( "%d \n", songMaxval );
 
 	const char *errPtr=player->get_error();
 	static char errStr[256] = {0};
