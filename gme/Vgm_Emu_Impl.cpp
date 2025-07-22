@@ -266,7 +266,7 @@ blip_time_t Vgm_Emu_Impl::run_commands( vgm_time_t end_time )
 
 				default:
 					pos += command_len( cmd ) - 1;
-					if(cmd)
+					if(cmd > 0x31)		//0x31 is the smallest vgm opcode according to https://vgmrips.net/wiki/VGM_Specification#Commands
 					{
 						snprintf(errstr, sizeof errstr, "Unknown stream event: 0x%x", cmd);
 						set_warning( errstr );
