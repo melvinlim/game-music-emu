@@ -5,6 +5,7 @@
 #define MUSIC_EMU_H
 
 #include "Gme_File.h"
+#include <stdio.h>
 class Multi_Buffer;
 
 struct Music_Emu : public Gme_File {
@@ -142,6 +143,7 @@ public:
 	Music_Emu();
 	~Music_Emu();
 protected:
+	long findmax( Music_Emu::sample_t* begin, long size );
 	void set_max_initial_silence( int n )       { max_initial_silence = n; }
 	void set_silence_lookahead( int n )         { silence_lookahead = n; }
 	void set_voice_count( int n )               { voice_count_ = n; }
@@ -232,7 +234,6 @@ inline blargg_err_t Music_Emu::track_info( track_info_t* out ) const
 {
 	return track_info( out, current_track_ );
 }
-
 inline long Music_Emu::sample_rate() const          { return sample_rate_; }
 inline const char** Music_Emu::voice_names() const  { return voice_names_; }
 inline int Music_Emu::voice_count() const           { return voice_count_; }
