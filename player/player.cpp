@@ -81,6 +81,9 @@ static bool looping = false;
 static bool shuffle = true;
 static int prevFileOffset = 0;
 
+static char errBuffer[2048] = {0};
+static char* errBufPtr = errBuffer;
+
 static void printTime(int seconds)
 {
 	printw("(%02d:%02d)", seconds / 60, seconds % 60 );
@@ -100,12 +103,6 @@ static void printInfo()
 	printw("\n%s\n", extra_info);
 	printw("\n%s\n", info_track_num);
 	printw("%s\n", textBuffer);
-	const char *errPtr=player->get_error();
-	if(errPtr){
-		time_t seconds_since_epoch = time(0);
-		snprintf(errorstr, sizeof errorstr, "%ld: %s", seconds_since_epoch, errPtr);
-	}
-	printw("%s\n", errorstr);
 
 /*
 	printw("looplen:  %d\n",player->track_info().loop_length);
@@ -124,6 +121,19 @@ static void printInfo()
 		clrtoeol();
 		printw("\n");
 	}
+	printw("\n");
+
+	const char *errPtr=player->get_error();
+	static char errStr[256] = {0};
+	if(errPtr){
+		time_t seconds_since_epoch = time(0);
+		//snprintf(errBufPtr, errBuffer + 2048 - errBufPtr, "%ld: %s\n", seconds_since_epoch, errPtr);
+		snprintf(errStr, sizeof errStr, "%ld: %s\n", seconds_since_epoch, errPtr);
+		snprintf(errBufPtr, errBuffer + 2048 - errBufPtr, "%s", errStr);
+		errBufPtr += strlen(errStr);
+		if(errBufPtr > errBuffer + 2048)	errBufPtr = errBuffer;
+	}
+	printw("%s", errBuffer);
 
 	refresh();
 }
