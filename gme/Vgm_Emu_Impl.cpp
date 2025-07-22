@@ -289,6 +289,10 @@ blip_time_t Vgm_Emu_Impl::run_commands( vgm_time_t end_time )
 						snprintf(errstr, sizeof errstr, "Unknown stream event: 0x%x", cmd);
 						set_warning( errstr );
 					}
+					else
+					{
+						set_warning( "Tried to execute data" );
+					}
 			}
 		}
 	}
