@@ -283,7 +283,8 @@ blip_time_t Vgm_Emu_Impl::run_commands( vgm_time_t end_time )
 					break;
 
 				default:
-					pos += command_len( cmd ) - 1;		//cmd = pos [-1].  see above.
+					pos += command_len( cmd ) - 1;		//cmd = pos [-1].  see above.  also pos pointer was incremented by one way back at the switch statement.
+					if(pos > data_end)	pos = data_end;
 					if(cmd >= 0x30)		//0x30 is the smallest vgm opcode according to https://vgmrips.net/wiki/VGM_Specification#Commands
 					{
 						snprintf(errstr, sizeof errstr, "Unknown stream event: 0x%x", cmd);
