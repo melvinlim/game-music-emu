@@ -332,7 +332,8 @@ void Music_Player::set_fadeout( int fadems )
 {
 	if(track_info_)
 		if(track_info_->length > 0)
-			gme_set_fade_msecs(emu_, track_info_->length - fadems, fadems);
+			gme_set_fade_msecs(emu_, track_info_->length, fadems);
+			//gme_set_fade_msecs(emu_, track_info_->length - fadems, fadems);
 }
 
 void Music_Player::fill_buffer( void* data, sample_t* out, int count )
