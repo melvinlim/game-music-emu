@@ -220,12 +220,17 @@ gme_err_t Music_Player::start_track( int track )
 		RETURN_ERR( gme_track_info( emu_, &track_info_, track ) );
 
 		// Calculate track length
-		if ( track_info_->length <= 0 )
-			track_info_->length = track_info_->intro_length +
-						track_info_->loop_length * 2;
+		if ( track_info_->play_length > 0 )
+			playtime = track_info_->play_length;
+		else
+			playtime = track_info_->intro_length +	track_info_->loop_length * 1;
+		
+		if ( playtime <= 0 )
+			playtime = track_info_->length;
 
-		if ( track_info_->length <= 0 )
-			track_info_->length = (long) (2.5 * 60 * 1000);
+		if ( playtime <= 0 )
+			playtime = (long) (60 * 1000);
+			//track_info_->length = (long) (2.5 * 60 * 1000);
 		//gme_set_fade_msecs( emu_, track_info_->length, 1 );
 
 		paused = false;
@@ -331,9 +336,8 @@ void Music_Player::seek_backward()
 void Music_Player::set_fadeout( int fadems )
 {
 	if(track_info_)
-		if(track_info_->length > 0)
-			gme_set_fade_msecs(emu_, track_info_->length, fadems);
-			//gme_set_fade_msecs(emu_, track_info_->length - fadems, fadems);
+		gme_set_fade_msecs(emu_, playtime - fadems, fadems);
+		//gme_set_fade_msecs(emu_, playtime, fadems);
 }
 
 void Music_Player::fill_buffer( void* data, sample_t* out, int count )

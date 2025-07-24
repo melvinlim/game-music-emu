@@ -325,6 +325,7 @@ gme_err_t gme_track_info( Music_Emu const* me, gme_info_t** out, int track )
 	COPY( intro_length );
 	COPY( loop_length );
 	COPY( fade_length );
+	COPY( play_length );
 
 	info->i5  = -1;
 	info->i6  = -1;
@@ -357,14 +358,6 @@ gme_err_t gme_track_info( Music_Emu const* me, gme_info_t** out, int track )
 	COPY( dumper );
 
 	#undef COPY
-
-	info->play_length = info->length;
-	if ( info->play_length <= 0 )
-	{
-		info->play_length = info->intro_length + 2 * info->loop_length; // intro + 2 loops
-		if ( info->play_length <= 0 )
-			info->play_length = 150 * 1000; // 2.5 minutes
-	}
 
 	*out = info;
 

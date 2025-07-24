@@ -97,7 +97,7 @@ static void printInfo()
 	printw( "%s\n", usage );
 	//printw("%d\n", player->get_time());
 	printTime(player->get_time()/1000);
-	long seconds = player->track_info().length / 1000;
+	long seconds = player->playtime / 1000;
 	printw("/");
 	printTime(seconds);
 	printw("\n");
@@ -106,17 +106,19 @@ static void printInfo()
 	printw("\n%s\n", info_track_num);
 	printw("%s\n", textBuffer);
 
-/*
+	printw("songlen:  %d\n",player->track_info().length);
 	printw("looplen:  %d\n",player->track_info().loop_length);
 	printw("introlen: %d\n",player->track_info().intro_length);
 	printw("fadelen:  %d\n",player->track_info().fade_length);
 	printw("playlen:  %d\n",player->track_info().play_length);
-*/
+	printw("\n");
 
+/*
 	if(player->track_info().fade_length > 0)
 	{
 		printw("fadelen:  %d\n",player->track_info().fade_length);
 	}
+*/
 
 	int voicecount=player->get_voice_count();
 	printw("voice count: %d\n",voicecount);
@@ -185,7 +187,7 @@ static void start_track( int track, const char* path )
 
 	// update window title with track info
 
-	long seconds = player->track_info().length / 1000;
+	long seconds = player->playtime / 1000;
 	const char* game = player->track_info().game;
 	if ( !*game )
 	{
@@ -223,7 +225,7 @@ static void start_track( int track, const char* path )
 		
 		scope->set_caption( title );
 	}
-	if(player->track_info().fade_length > 0)
+	if(player->track_info().fade_length >= 0)
 	{
 		player->set_fadeout(player->track_info().fade_length);
 	}

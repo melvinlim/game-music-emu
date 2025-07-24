@@ -78,6 +78,8 @@ public:
 
 	int get_maxval()	{ return maxval; }
 
+	int playtime;
+
 public:
 	Music_Player();
 	~Music_Player();
